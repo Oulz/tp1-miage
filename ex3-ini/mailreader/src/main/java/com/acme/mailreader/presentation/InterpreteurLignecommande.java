@@ -6,13 +6,14 @@ import java.util.logging.Logger;
 import com.acme.mailreader.domain.Mail;
 import com.acme.mailreader.service.MailService;
 import com.acme.mailreader.utils.MailInvalideException;
+import com.google.inject.Inject;
 
 public class InterpreteurLignecommande {
 	
 	//TODO : injecter un serviceMail par constructeur
 	private MailService serviceMail;
 	
-	
+	@Inject
 	public InterpreteurLignecommande() {
 		super();
 	}
