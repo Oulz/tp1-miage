@@ -1,6 +1,8 @@
 package com.acme.mailreader.domain;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
@@ -9,7 +11,7 @@ import org.junit.Test;
 public class MailComparatorTest {
 	
 	private MailComparator comparator;
-
+	
 	@Before
 	public void setUp() throws Exception {
 		this.comparator = new MailComparator();
@@ -17,9 +19,9 @@ public class MailComparatorTest {
 
 	@Test
 	public final void egauxSiDeuxMailsNuls() {
-		Mail mail1 = null;
-		Mail mail2 = null;
-		assertThat(comparator.compare(mail1, mail2), is(0));
+		Mail unMail = null;
+		Mail unAutreMail = null;
+		assertThat(comparator.compare(unMail, unAutreMail), is(0));
 	}
 	
 	@Test
@@ -29,9 +31,19 @@ public class MailComparatorTest {
 		assertThat(comparator.compare(mail1, mail2), is(0));
 	}
 	
-	//TODO
-	//Autres tests unitaires
+	public final void mailPlusImportantEnPremier() {
+		Mail unMail = new Mail.Builder("sujet").important(true).build();
+		Mail unAutreMail = new Mail.Builder("sujet").important(false).build();
+		assertThat(unMail, not(nullValue()));
+		assertThat(comparator.compare(unMail, unAutreMail), is(MailComparator.PREMIER_PLUS_PETIT));		
+	}
 	
-	
+	@Test
+	public final void ordreAlphabetiqueSiMemeImportance() {
+		Mail unMail = new Mail.Builder("sujet").important(true).build();
+		Mail unAutreMail = new Mail.Builder("sujet").important(false).build();
+		assertThat(unMail, not(nullValue()));
+		assertThat(comparator.compare(unMail, unAutreMail), is(MailComparator.PREMIER_PLUS_GRAND));		
+	}
 	
 }
