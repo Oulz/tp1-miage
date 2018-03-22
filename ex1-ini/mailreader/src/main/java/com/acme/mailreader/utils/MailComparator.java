@@ -11,27 +11,44 @@ import com.acme.mailreader.model.Mail;
  *
  */
 public class MailComparator implements Comparator<Mail> {
-
+	public static final int egaux=0;
+	public static final int unMail_PlusImportant=-1;
+	public static final int unMail_MoinsImportant=1;
+	
 	public int compare(Mail unMail, Mail unAutreMail) {
-		if (unMail == null || unAutreMail == null) {
-			return 0;
+		if (unDesMailNull(unMail,unAutreMail)) {
+			return egaux;
 		}
 		if (unMail.isImportant() != unAutreMail.isImportant()) {
 			if (unMail.isImportant() && !unAutreMail.isImportant()) {
-				return -1;
+				return unMail_PlusImportant;
 			} else {
-				return 1;
+				return unMail_MoinsImportant;
 			}
 		}
 		if (unMail.getStatut() != unAutreMail.getStatut()) {
 			int comp = unMail.getStatut().ordinal()
 					- unAutreMail.getStatut().ordinal();
-			return comp > 0 ? -1 : 1;
+			return comp > egaux ? unMail_PlusImportant : unMail_MoinsImportant;
 		}
 		if (unMail.getSujet() != unAutreMail.getSujet()) {
 			return unAutreMail.getSujet().compareTo(unMail.getSujet());
 		}
 		return unAutreMail.getDate().compareTo(unMail.getDate());
+	}
+	
+	public boolean unDesMailNull(Mail unMail, Mail unAutreMail){
+		if (unMail==null || unAutreMail==null)
+		return true;
+		else
+		return false;
+	}
+	
+	public boolean unMailImportant(Mail unMail, Mail unAutreMail){
+		if (unMail.isImportant() || unAutreMail==null)
+		return true;
+		else
+		return false;
 	}
 	
 
