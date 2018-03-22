@@ -14,5 +14,11 @@ public class MailTest {
 		new Mail.Builder("sujet").date(Instant.parse("1968-12-03T10:15:30.00Z")).build();
 				
 	}
+	
+	@Test
+	public final void premierPlusPetitSiDateNulle () {
+		
+		
+	}
 
 }

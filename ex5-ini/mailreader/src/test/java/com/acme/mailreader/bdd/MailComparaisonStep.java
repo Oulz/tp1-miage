@@ -25,6 +25,30 @@ import cucumber.api.java.en.When;
 public class MailComparaisonStep {
 
 	private Mail mail1;
+	public Mail getMail1() {
+		return mail1;
+	}
+
+	public void setMail1(Mail mail1) {
+		this.mail1 = mail1;
+	}
+
+	public Mail getMail2() {
+		return mail2;
+	}
+
+	public String getResultatComparaison() {
+		return resultatComparaison;
+	}
+
+	public void setResultatComparaison(String resultatComparaison) {
+		this.resultatComparaison = resultatComparaison;
+	}
+
+	public void setMail2(Mail mail2) {
+		this.mail2 = mail2;
+	}
+
 	private Mail mail2;
 	private String resultatComparaison;
 	Comparator<Mail> comparator = new MailComparator();
