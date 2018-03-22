@@ -12,26 +12,26 @@ import com.acme.mailreader.model.Mail;
  */
 public class MailComparator implements Comparator<Mail> {
 
-	public int compare(Mail obj1, Mail obj2) {
-		if (obj1 == null || obj2 == null) {
+	public int compare(Mail unMail, Mail unAutreMail) {
+		if (unMail == null || unAutreMail == null) {
 			return 0;
 		}
-		if (obj1.isImportant() != obj2.isImportant()) {
-			if (obj1.isImportant() && !obj2.isImportant()) {
+		if (unMail.isImportant() != unAutreMail.isImportant()) {
+			if (unMail.isImportant() && !unAutreMail.isImportant()) {
 				return -1;
 			} else {
 				return 1;
 			}
 		}
-		if (obj1.getStatut() != obj2.getStatut()) {
-			int comp = obj1.getStatut().ordinal()
-					- obj2.getStatut().ordinal();
+		if (unMail.getStatut() != unAutreMail.getStatut()) {
+			int comp = unMail.getStatut().ordinal()
+					- unAutreMail.getStatut().ordinal();
 			return comp > 0 ? -1 : 1;
 		}
-		if (obj1.getSujet() != obj2.getSujet()) {
-			return obj2.getSujet().compareTo(obj1.getSujet());
+		if (unMail.getSujet() != unAutreMail.getSujet()) {
+			return unAutreMail.getSujet().compareTo(unMail.getSujet());
 		}
-		return obj2.getDate().compareTo(obj1.getDate());
+		return unAutreMail.getDate().compareTo(unMail.getDate());
 	}
 	
 
