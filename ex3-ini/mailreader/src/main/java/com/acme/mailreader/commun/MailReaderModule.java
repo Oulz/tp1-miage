@@ -28,7 +28,7 @@ public class MailReaderModule extends AbstractModule {
 		else {
 			bind(MailSender.class).to(InMemoryMailSender.class);
 
-		}	
+		}		
 
 }
 }

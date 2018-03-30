@@ -1,8 +1,11 @@
 package com.acme.mailreader.bdd;
 
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Assert;
 
 import com.acme.mailreader.domain.Mail;
 import com.acme.mailreader.domain.Mail.Statut;
@@ -23,18 +26,20 @@ import cucumber.api.java.en.When;
  */
 
 public class MailComparaisonStep {
-
-	private Mail mail1;
-	public Mail getMail1() {
-		return mail1;
+	private Mail unMail;
+	private Mail unAutreMail;
+	private String resultatComparaison;
+	Comparator<Mail> comparator = new MailComparator();
+	public Mail getunMail() {
+		return unMail;
 	}
 
-	public void setMail1(Mail mail1) {
-		this.mail1 = mail1;
+	public void setunMail(Mail unMail) {
+		this.unMail = unMail;
 	}
 
-	public Mail getMail2() {
-		return mail2;
+	public Mail getunAutreMail() {
+		return unAutreMail;
 	}
 
 	public String getResultatComparaison() {
@@ -45,45 +50,46 @@ public class MailComparaisonStep {
 		this.resultatComparaison = resultatComparaison;
 	}
 
-	public void setMail2(Mail mail2) {
-		this.mail2 = mail2;
+	public void setunAutreMail(Mail unAutreMail) {
+		this.unAutreMail = unAutreMail;
 	}
 
-	private Mail mail2;
-	private String resultatComparaison;
-	Comparator<Mail> comparator = new MailComparator();
+
 	private static final Map<Integer, String> resuAsString = new HashMap<Integer, String>();
 	static {
-		resuAsString.put(MailComparator.PREMIER_PLUS_PETIT , "MAIL1_APRES");
+		resuAsString.put(MailComparator.PREMIER_PLUS_PETIT , "unMail_APRES");
 		resuAsString.put(MailComparator.EGAUX, "EGAUX");
-		resuAsString.put(MailComparator.PREMIER_PLUS_GRAND, "MAIL1_AVANT");
+		resuAsString.put(MailComparator.PREMIER_PLUS_GRAND, "unMail_AVANT");
 	}
 	
 
 	@Given("^un premier mail avec l'importance \"([^\"]*)\", le statut \"([^\"]*)\", le sujet \"([^\"]*)\" et la date \"([^\"]*)\"$")
 	public void un_premier_mail(boolean importance, Statut statut,
 			String sujet, String date) throws DateIncorrecteException {
-		//TODO
+			unMail = new Mail.Builder(sujet).date(Instant.parse(date)).important(importance).statut(statut).build();
 	}
 
 	@Given("^un second mail avec l'importance \"([^\"]*)\", le statut \"([^\"]*)\", le sujet \"([^\"]*)\" et la date \"([^\"]*)\"$")
 	public void un_second_mail(boolean importance, Statut statut, String sujet,
 			String date) throws DateIncorrecteException {
-		//TODO
+		unAutreMail = new Mail.Builder(sujet).date(Instant.parse(date)).important(importance).statut(statut).build();
+
 	}
 
 	
 
 	@When("^je trie$")
 	public void je_trie() throws Throwable {
-		//TODO
+		resultatComparaison = resuAsString.get(comparator.compare(unMail, unAutreMail));
 	}
 
 	@Then("^le test d'égalité doit retourner \"([^\"]*)\"$")
 	public void le_test_d_egalité(String resu) throws Throwable {
-		//TODO
-		//assertThat(...);
+		Assert.assertEquals(resu, resultatComparaison);
 	}
+	
+	
+	
 	
 
 }

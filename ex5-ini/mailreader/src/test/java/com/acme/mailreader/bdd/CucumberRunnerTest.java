@@ -12,6 +12,7 @@ import cucumber.api.junit.Cucumber;
  * @author bflorat
  *
  */
+
 public class CucumberRunnerTest {
 	// Classe vide à dessein
 }
